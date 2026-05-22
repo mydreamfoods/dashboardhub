@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+body{
+  background:radial-gradient(circle at top right,#1e3c72 0%,#0f172a 45%,#020617 100%);
+  min-height:100vh;
+  color:white;
+  overflow-x:hidden;
+}
+
+/* =========================
+PAGE LOADER
+========================= */
+#pageLoader{
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle at top right,#1e3c72 0%,#0f172a 45%,#020617 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+  transition:0.5s ease;
+}
+.loader-box{ text-align:center; }
+.loader-box h1{
+  margin-top:25px;
+  font-size:34px;
+  background:linear-gradient(to right,#38bdf8,#ffffff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.loader-box p{
+  margin-top:10px;
+  color:#cbd5e1;
+  letter-spacing:1px;
+}
+.main-spinner{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  border:6px solid rgba(255,255,255,0.15);
+  border-top:6px solid #38bdf8;
+  animation:spin 1s linear infinite;
+  margin:auto;
+}
+@keyframes spin{ 100%{ transform:rotate(360deg); } }
+
+/* =========================
+ICON ANIMATIONS
+========================= */
+@keyframes bounce{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-6px); }
+}
+@keyframes pulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.2); }
+}
+@keyframes spin-slow{
+  0%{ transform:rotate(0deg); }
+  100%{ transform:rotate(360deg); }
+}
+@keyframes shake{
+  0%,100%{ transform:translateX(0); }
+  20%{ transform:translateX(-4px) rotate(-5deg); }
+  40%{ transform:translateX(4px) rotate(5deg); }
+  60%{ transform:translateX(-3px) rotate(-3deg); }
+  80%{ transform:translateX(3px) rotate(3deg); }
+}
+@keyframes float{
+  0%,100%{ transform:translateY(0) scale(1); }
+  33%{ transform:translateY(-5px) scale(1.05); }
+  66%{ transform:translateY(2px) scale(0.97); }
+}
+@keyframes flip{
+  0%,100%{ transform:rotateY(0deg); }
+  50%{ transform:rotateY(180deg); }
+}
+@keyframes swing{
+  0%,100%{ transform:rotate(0deg); }
+  25%{ transform:rotate(15deg); }
+  75%{ transform:rotate(-15deg); }
+}
+@keyframes heartbeat{
+  0%,100%{ transform:scale(1); }
+  14%{ transform:scale(1.2); }
+  28%{ transform:scale(1); }
+  42%{ transform:scale(1.2); }
+  70%{ transform:scale(1); }
+}
+@keyframes wobble{
+  0%,100%{ transform:rotate(0deg); }
+  15%{ transform:rotate(-12deg) scale(1.1); }
+  30%{ transform:rotate(10deg) scale(1.05); }
+  45%{ transform:rotate(-6deg); }
+  60%{ transform:rotate(4deg); }
+  75%{ transform:rotate(-2deg); }
+}
+@keyframes tada{
+  0%,100%{ transform:scale(1) rotate(0deg); }
+  10%,20%{ transform:scale(0.9) rotate(-5deg); }
+  30%,50%,70%,90%{ transform:scale(1.1) rotate(5deg); }
+  40%,60%,80%{ transform:scale(1.1) rotate(-5deg); }
+}
+
+/* assign animation classes */
+.anim-bounce{ animation:bounce 1.8s ease-in-out infinite; }
+.anim-pulse{ animation:pulse 1.5s ease-in-out infinite; }
+.anim-spin{ animation:spin-slow 3s linear infinite; }
+.anim-shake{ animation:shake 2s ease-in-out infinite; }
+.anim-float{ animation:float 2.5s ease-in-out infinite; }
+.anim-flip{ animation:flip 2.5s ease-in-out infinite; }
+.anim-swing{ animation:swing 1.8s ease-in-out infinite; transform-origin:top center; }
+.anim-heartbeat{ animation:heartbeat 1.8s ease-in-out infinite; }
+.anim-wobble{ animation:wobble 2s ease-in-out infinite; }
+.anim-tada{ animation:tada 2s ease-in-out infinite; }
+
+/* glow ring on icon box */
+.icon{
+  width:65px;
+  height:65px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  margin-bottom:22px;
+  color:white;
+  position:relative;
+  box-shadow:0 0 0 0 rgba(56,189,248,0.5);
+  animation:icon-glow 2.5s ease-in-out infinite;
+}
+@keyframes icon-glow{
+  0%,100%{ box-shadow:0 0 0 0 rgba(56,189,248,0.5); }
+  50%{ box-shadow:0 0 0 8px rgba(56,189,248,0); }
+}
+
+/* =========================
+MAIN CONTAINER
+========================= */
+.container{
+  width:100%;
+  max-width:1300px;
+  margin:auto;
+  padding:40px 20px 80px;
+}
+.hero{ text-align:center; margin-bottom:50px; }
+.hero h1{
+  font-size:52px;
+  background:linear-gradient(to right,#38bdf8,#ffffff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:12px;
+}
+.hero p{
+  color:#cbd5e1;
+  max-width:700px;
+  margin:auto;
+  line-height:1.8;
+}
+
+/* =========================
+TOPBAR
+========================= */
+.topbar{
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:30px;
+}
+.admin-btn{
+  background:linear-gradient(to right,#0ea5e9,#38bdf8);
+  border:none;
+  padding:14px 24px;
+  border-radius:14px;
+  color:white;
+  cursor:pointer;
+  font-weight:600;
+  font-size:15px;
+  transition:0.3s;
+}
+.admin-btn:hover{ transform:translateY(-3px); }
+
+/* =========================
+DASHBOARD GRID
+========================= */
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+.card{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px);
+  border-radius:24px;
+  padding:28px;
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+.card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 15px 35px rgba(56,189,248,0.2);
+  border-color:#38bdf8;
+}
+.card::before{
+  content:'';
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  background:rgba(56,189,248,0.15);
+  top:-60px;
+  right:-60px;
+}
+.card h2{ font-size:24px; margin-bottom:10px; }
+.card p{
+  color:#cbd5e1;
+  line-height:1.7;
+  font-size:15px;
+  margin-bottom:25px;
+}
+.open-btn{
+  display:inline-block;
+  background:linear-gradient(to right,#0ea5e9,#38bdf8);
+  padding:12px 18px;
+  border-radius:12px;
+  color:white;
+  font-size:14px;
+  font-weight:600;
+  text-decoration:none;
+  transition:0.3s;
+}
+.open-btn:hover{ transform:scale(1.05); }
+
+/* =========================
+MODAL
+========================= */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:20px;
+}
+.modal-box{
+  width:100%;
+  max-width:500px;
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:24px;
+  padding:30px;
+  animation:popup 0.3s ease;
+}
+@keyframes popup{
+  from{ transform:scale(0.8); opacity:0; }
+  to{ transform:scale(1); opacity:1; }
+}
+.modal-box h2{ margin-bottom:20px; font-size:28px; }
+.input{
+  width:100%;
+  padding:14px;
+  border:none;
+  outline:none;
+  border-radius:14px;
+  margin-bottom:15px;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  font-size:15px;
+}
+.input::placeholder{ color:#94a3b8; }
+.save-btn{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(to right,#0ea5e9,#38bdf8);
+  color:white;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+.save-btn:hover{ transform:translateY(-2px); }
+.close-btn{
+  margin-top:12px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:14px;
+  background:#1e293b;
+  color:white;
+  cursor:pointer;
+}
+.loader{
+  width:18px;
+  height:18px;
+  border:3px solid rgba(255,255,255,0.3);
+  border-top:3px solid white;
+  border-radius:50%;
+  display:inline-block;
+  animation:spin 1s linear infinite;
+  margin-right:10px;
+  vertical-align:middle;
+}
+
+@media(max-width:768px){
+  .hero h1{ font-size:36px; }
+  .hero p{ font-size:15px; }
+}
+</style>
+</head>
+<body>
+
+<div id="pageLoader">
+  <div class="loader-box">
+    <div class="main-spinner"></div>
+    <h1>Dashboard Hub</h1>
+    <p>Loading Dashboards...</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="topbar">
+    <button class="admin-btn" onclick="openModal()">
+      <i class="fa-solid fa-plus"></i> Add Dashboard
+    </button>
+  </div>
+  <div class="hero">
+    <h1>Dashboard Hub</h1>
+    <p>Smart central dashboard system for workforce tracking, analytics, reports and production management.</p>
+  </div>
+  <div class="dashboard-grid" id="dashboardGrid"></div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h2>Add Dashboard</h2>
+    <input type="password" id="password" class="input" placeholder="Admin Password">
+    <input type="text" id="title" class="input" placeholder="Dashboard Title">
+    <input type="text" id="description" class="input" placeholder="Short Description">
+    <input type="text" id="link" class="input" placeholder="Dashboard Link">
+    <input type="text" id="emoji" class="input" placeholder="Emoji Icon (optional) e.g. 📊">
+    <button class="save-btn" onclick="saveDashboard()">Save Dashboard</button>
+    <button class="close-btn" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxbVNVS2ca2S24d_ML7hn6tgJrZj080SkosryXu2M_Km0KPGKimwOSw1cS0wy2x4Vg9NA/exec";
+
+// Each entry: [fa-icon, animation-class]
+const ICON_SET = [
+  ["fa-chart-line",       "anim-bounce"],
+  ["fa-boxes-stacked",    "anim-float"],
+  ["fa-file-invoice",     "anim-shake"],
+  ["fa-truck-fast",       "anim-wobble"],
+  ["fa-users",            "anim-pulse"],
+  ["fa-industry",         "anim-spin"],
+  ["fa-cash-register",    "anim-tada"],
+  ["fa-chart-pie",        "anim-heartbeat"],
+  ["fa-clipboard-list",   "anim-swing"],
+  ["fa-gauge-high",       "anim-flip"],
+  ["fa-warehouse",        "anim-float"],
+  ["fa-bag-shopping",     "anim-bounce"],
+  ["fa-chart-bar",        "anim-pulse"],
+  ["fa-receipt",          "anim-shake"],
+  ["fa-sitemap",          "anim-wobble"]
+];
+
+async function loadDashboards(){
+  try{
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    const grid = document.getElementById("dashboardGrid");
+    grid.innerHTML = "";
+
+    data.forEach((dashboard, index) => {
+      const [icon, anim] = ICON_SET[index % ICON_SET.length];
+      grid.innerHTML += `
+        <div class="card">
+          <div class="icon">
+            <i class="fa-solid ${icon} ${anim}"></i>
+          </div>
+          <h2>${dashboard.title}</h2>
+          <p>${dashboard.description}</p>
+          <a class="open-btn" href="${dashboard.link}" target="_blank">
+            <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:6px;font-size:12px;"></i>
+            Open Dashboard
+          </a>
+        </div>
+      `;
+    });
+
+    setTimeout(()=>{
+      document.getElementById("pageLoader").style.opacity = "0";
+      document.getElementById("pageLoader").style.pointerEvents = "none";
+      setTimeout(()=>{ document.getElementById("pageLoader").style.display = "none"; }, 500);
+    }, 800);
+
+  }catch(error){
+    console.log(error);
+    document.getElementById("dashboardGrid").innerHTML = "<h2>Failed To Load Dashboards</h2>";
+  }
+}
+
+function openModal(){ document.getElementById("modal").style.display = "flex"; }
+function closeModal(){ document.getElementById("modal").style.display = "none"; }
+
+async function saveDashboard(){
+  const saveBtn = document.querySelector(".save-btn");
+  const password    = document.getElementById("password").value.trim();
+  const title       = document.getElementById("title").value.trim();
+  const description = document.getElementById("description").value.trim();
+  const link        = document.getElementById("link").value.trim();
+  const emoji       = document.getElementById("emoji").value.trim() || "📊";
+
+  if(password === "" || title === "" || link === ""){
+    alert("Please fill required fields");
+    return;
+  }
+
+  saveBtn.disabled = true;
+  saveBtn.innerHTML = `<span class="loader"></span> Saving Dashboard...`;
+
+  try{
+    const response = await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify({ password, title, description, link, emoji })
+    });
+    const result = await response.json();
+
+    if(result.success){
+      saveBtn.innerHTML = "✅ Dashboard Saved";
+      document.getElementById("password").value = "";
+      document.getElementById("title").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("link").value = "";
+      document.getElementById("emoji").value = "";
+      loadDashboards();
+      setTimeout(()=>{ closeModal(); saveBtn.disabled = false; saveBtn.innerHTML = "Save Dashboard"; }, 1500);
+    }else{
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = "Save Dashboard";
+      alert(result.message);
+    }
+  }catch(error){
+    console.log(error);
+    saveBtn.disabled = false;
+    saveBtn.innerHTML = "Save Dashboard";
+    alert("Something Went Wrong");
+  }
+}
+
+loadDashboards();
+</script>
+</body>
+</html>
