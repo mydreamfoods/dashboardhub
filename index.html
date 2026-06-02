@@ -7,115 +7,111 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins',sans-serif;
-}
+*{ margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 body{
   background:radial-gradient(circle at top right,#1e3c72 0%,#0f172a 45%,#020617 100%);
-  min-height:100vh;
-  color:white;
-  overflow-x:hidden;
+  min-height:100vh; color:white; overflow-x:hidden;
 }
 
-/* =========================
-PAGE LOADER
-========================= */
+/* PAGE LOADER */
 #pageLoader{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background:radial-gradient(circle at top right,#1e3c72 0%,#0f172a 45%,#020617 100%);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:99999;
-  transition:0.5s ease;
+  display:flex; align-items:center; justify-content:center; z-index:99999; transition:0.5s ease;
 }
 .loader-box{ text-align:center; }
 .loader-box h1{
-  margin-top:25px;
-  font-size:34px;
+  margin-top:25px; font-size:34px;
   background:linear-gradient(to right,#38bdf8,#ffffff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-.loader-box p{
-  margin-top:10px;
-  color:#cbd5e1;
-  letter-spacing:1px;
-}
+.loader-box p{ margin-top:10px; color:#cbd5e1; letter-spacing:1px; }
 .main-spinner{
-  width:90px;
-  height:90px;
-  border-radius:50%;
-  border:6px solid rgba(255,255,255,0.15);
-  border-top:6px solid #38bdf8;
-  animation:spin 1s linear infinite;
-  margin:auto;
+  width:90px; height:90px; border-radius:50%;
+  border:6px solid rgba(255,255,255,0.15); border-top:6px solid #38bdf8;
+  animation:spin 1s linear infinite; margin:auto;
 }
 @keyframes spin{ 100%{ transform:rotate(360deg); } }
 
-/* =========================
-ICON ANIMATIONS
-========================= */
-@keyframes bounce{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(-6px); }
+/* LOGIN SCREEN */
+#loginScreen{
+  position:fixed; inset:0;
+  background:radial-gradient(circle at top right,#1e3c72 0%,#0f172a 45%,#020617 100%);
+  display:none; align-items:center; justify-content:center; z-index:9999; padding:20px;
 }
-@keyframes pulse{
-  0%,100%{ transform:scale(1); }
-  50%{ transform:scale(1.2); }
+.login-card{
+  width:100%; max-width:420px;
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px); border-radius:28px; padding:40px 36px;
+  animation:popup 0.4s ease; position:relative; overflow:hidden;
 }
-@keyframes spin-slow{
-  0%{ transform:rotate(0deg); }
-  100%{ transform:rotate(360deg); }
+.login-card::before{
+  content:''; position:absolute; width:220px; height:220px; border-radius:50%;
+  background:rgba(56,189,248,0.1); top:-80px; right:-80px; pointer-events:none;
 }
-@keyframes shake{
-  0%,100%{ transform:translateX(0); }
-  20%{ transform:translateX(-4px) rotate(-5deg); }
-  40%{ transform:translateX(4px) rotate(5deg); }
-  60%{ transform:translateX(-3px) rotate(-3deg); }
-  80%{ transform:translateX(3px) rotate(3deg); }
+.login-logo{
+  width:70px; height:70px; border-radius:20px;
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  display:flex; align-items:center; justify-content:center;
+  font-size:28px; margin:0 auto 20px; color:white;
+  animation:icon-glow 2.5s ease-in-out infinite;
 }
-@keyframes float{
-  0%,100%{ transform:translateY(0) scale(1); }
-  33%{ transform:translateY(-5px) scale(1.05); }
-  66%{ transform:translateY(2px) scale(0.97); }
+.login-card h2{
+  text-align:center; font-size:26px; margin-bottom:6px;
+  background:linear-gradient(to right,#38bdf8,#ffffff);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
 }
-@keyframes flip{
-  0%,100%{ transform:rotateY(0deg); }
-  50%{ transform:rotateY(180deg); }
+.login-card .subtitle{ text-align:center; color:#94a3b8; font-size:14px; margin-bottom:30px; }
+.input-group{ position:relative; margin-bottom:16px; }
+.input-group i.icon-left{
+  position:absolute; left:16px; top:50%; transform:translateY(-50%);
+  color:#38bdf8; font-size:15px; pointer-events:none;
 }
-@keyframes swing{
-  0%,100%{ transform:rotate(0deg); }
-  25%{ transform:rotate(15deg); }
-  75%{ transform:rotate(-15deg); }
+.input{
+  width:100%; padding:14px 14px 14px 44px;
+  border:1px solid rgba(255,255,255,0.1); outline:none;
+  border-radius:14px; background:rgba(255,255,255,0.07);
+  color:white; font-size:15px; font-family:'Poppins',sans-serif; transition:0.3s;
 }
-@keyframes heartbeat{
-  0%,100%{ transform:scale(1); }
-  14%{ transform:scale(1.2); }
-  28%{ transform:scale(1); }
-  42%{ transform:scale(1.2); }
-  70%{ transform:scale(1); }
+.input:focus{ border-color:#38bdf8; background:rgba(56,189,248,0.08); }
+.input::placeholder{ color:#64748b; }
+.toggle-pw{
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  cursor:pointer; color:#64748b; font-size:14px; transition:0.2s;
 }
-@keyframes wobble{
-  0%,100%{ transform:rotate(0deg); }
-  15%{ transform:rotate(-12deg) scale(1.1); }
-  30%{ transform:rotate(10deg) scale(1.05); }
-  45%{ transform:rotate(-6deg); }
-  60%{ transform:rotate(4deg); }
-  75%{ transform:rotate(-2deg); }
+.toggle-pw:hover{ color:#38bdf8; }
+.login-btn{
+  width:100%; padding:14px; border:none; border-radius:14px;
+  background:linear-gradient(to right,#0ea5e9,#38bdf8);
+  color:white; font-size:15px; font-weight:600; cursor:pointer;
+  transition:0.3s; margin-top:6px; font-family:'Poppins',sans-serif;
 }
-@keyframes tada{
-  0%,100%{ transform:scale(1) rotate(0deg); }
-  10%,20%{ transform:scale(0.9) rotate(-5deg); }
-  30%,50%,70%,90%{ transform:scale(1.1) rotate(5deg); }
-  40%,60%,80%{ transform:scale(1.1) rotate(-5deg); }
+.login-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 20px rgba(56,189,248,0.3); }
+.login-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+.error-msg{
+  background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3);
+  border-radius:10px; padding:10px 14px; font-size:13px; color:#fca5a5;
+  margin-top:14px; display:none; text-align:center;
+}
+.btn-loader{
+  width:16px; height:16px; border:2px solid rgba(255,255,255,0.3);
+  border-top:2px solid white; border-radius:50%;
+  display:inline-block; animation:spin 1s linear infinite;
+  margin-right:8px; vertical-align:middle;
 }
 
-/* assign animation classes */
+/* ICON ANIMATIONS */
+@keyframes bounce{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+@keyframes pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.2); } }
+@keyframes spin-slow{ 0%{ transform:rotate(0deg); } 100%{ transform:rotate(360deg); } }
+@keyframes shake{ 0%,100%{ transform:translateX(0); } 20%{ transform:translateX(-4px) rotate(-5deg); } 40%{ transform:translateX(4px) rotate(5deg); } 60%{ transform:translateX(-3px) rotate(-3deg); } 80%{ transform:translateX(3px) rotate(3deg); } }
+@keyframes float{ 0%,100%{ transform:translateY(0) scale(1); } 33%{ transform:translateY(-5px) scale(1.05); } 66%{ transform:translateY(2px) scale(0.97); } }
+@keyframes flip{ 0%,100%{ transform:rotateY(0deg); } 50%{ transform:rotateY(180deg); } }
+@keyframes swing{ 0%,100%{ transform:rotate(0deg); } 25%{ transform:rotate(15deg); } 75%{ transform:rotate(-15deg); } }
+@keyframes heartbeat{ 0%,100%{ transform:scale(1); } 14%{ transform:scale(1.2); } 28%{ transform:scale(1); } 42%{ transform:scale(1.2); } 70%{ transform:scale(1); } }
+@keyframes wobble{ 0%,100%{ transform:rotate(0deg); } 15%{ transform:rotate(-12deg) scale(1.1); } 30%{ transform:rotate(10deg) scale(1.05); } 45%{ transform:rotate(-6deg); } 60%{ transform:rotate(4deg); } 75%{ transform:rotate(-2deg); } }
+@keyframes tada{ 0%,100%{ transform:scale(1) rotate(0deg); } 10%,20%{ transform:scale(0.9) rotate(-5deg); } 30%,50%,70%,90%{ transform:scale(1.1) rotate(5deg); } 40%,60%,80%{ transform:scale(1.1) rotate(-5deg); } }
+@keyframes icon-glow{ 0%,100%{ box-shadow:0 0 0 0 rgba(56,189,248,0.5); } 50%{ box-shadow:0 0 0 10px rgba(56,189,248,0); } }
 .anim-bounce{ animation:bounce 1.8s ease-in-out infinite; }
 .anim-pulse{ animation:pulse 1.5s ease-in-out infinite; }
 .anim-spin{ animation:spin-slow 3s linear infinite; }
@@ -127,348 +123,353 @@ ICON ANIMATIONS
 .anim-wobble{ animation:wobble 2s ease-in-out infinite; }
 .anim-tada{ animation:tada 2s ease-in-out infinite; }
 
-/* glow ring on icon box */
+/* ICON BOX */
 .icon{
-  width:65px;
-  height:65px;
-  border-radius:18px;
+  width:65px; height:65px; border-radius:18px;
   background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  margin-bottom:22px;
-  color:white;
-  position:relative;
-  box-shadow:0 0 0 0 rgba(56,189,248,0.5);
+  display:flex; align-items:center; justify-content:center;
+  font-size:26px; margin-bottom:22px; color:white;
   animation:icon-glow 2.5s ease-in-out infinite;
 }
-@keyframes icon-glow{
-  0%,100%{ box-shadow:0 0 0 0 rgba(56,189,248,0.5); }
-  50%{ box-shadow:0 0 0 8px rgba(56,189,248,0); }
-}
 
-/* =========================
-MAIN CONTAINER
-========================= */
-.container{
-  width:100%;
-  max-width:1300px;
-  margin:auto;
-  padding:40px 20px 80px;
-}
+/* MAIN APP */
+#mainApp{ display:none; }
+.container{ width:100%; max-width:1300px; margin:auto; padding:40px 20px 80px; }
 .hero{ text-align:center; margin-bottom:50px; }
 .hero h1{
   font-size:52px;
   background:linear-gradient(to right,#38bdf8,#ffffff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  margin-bottom:12px;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:12px;
 }
-.hero p{
-  color:#cbd5e1;
-  max-width:700px;
-  margin:auto;
-  line-height:1.8;
-}
+.hero p{ color:#cbd5e1; max-width:700px; margin:auto; line-height:1.8; }
 
-/* =========================
-TOPBAR
-========================= */
-.topbar{
-  display:flex;
-  justify-content:flex-end;
-  margin-bottom:30px;
+.topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:12px; }
+.user-badge{
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);
+  border-radius:12px; padding:10px 18px; font-size:14px; color:#cbd5e1;
+  display:flex; align-items:center; gap:8px;
 }
+.user-badge i{ color:#38bdf8; }
+.topbar-right{ display:flex; gap:12px; align-items:center; }
 .admin-btn{
-  background:linear-gradient(to right,#0ea5e9,#38bdf8);
-  border:none;
-  padding:14px 24px;
-  border-radius:14px;
-  color:white;
-  cursor:pointer;
-  font-weight:600;
-  font-size:15px;
-  transition:0.3s;
+  background:linear-gradient(to right,#0ea5e9,#38bdf8); border:none;
+  padding:12px 20px; border-radius:14px; color:white; cursor:pointer;
+  font-weight:600; font-size:14px; transition:0.3s; font-family:'Poppins',sans-serif;
+  display:none;
 }
 .admin-btn:hover{ transform:translateY(-3px); }
+.logout-btn{
+  background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.2);
+  padding:12px 18px; border-radius:14px; color:#fca5a5; cursor:pointer;
+  font-weight:600; font-size:14px; transition:0.3s; font-family:'Poppins',sans-serif;
+}
+.logout-btn:hover{ background:rgba(239,68,68,0.25); transform:translateY(-2px); }
 
-/* =========================
-DASHBOARD GRID
-========================= */
-.dashboard-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:25px;
-}
+.dashboard-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:25px; }
 .card{
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(12px);
-  border-radius:24px;
-  padding:28px;
-  transition:0.4s;
-  position:relative;
-  overflow:hidden;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(12px); border-radius:24px; padding:28px;
+  transition:0.4s; position:relative; overflow:hidden;
 }
-.card:hover{
-  transform:translateY(-10px);
-  box-shadow:0 15px 35px rgba(56,189,248,0.2);
-  border-color:#38bdf8;
-}
+.card:hover{ transform:translateY(-10px); box-shadow:0 15px 35px rgba(56,189,248,0.2); border-color:#38bdf8; }
 .card::before{
-  content:'';
-  position:absolute;
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  background:rgba(56,189,248,0.15);
-  top:-60px;
-  right:-60px;
+  content:''; position:absolute; width:180px; height:180px; border-radius:50%;
+  background:rgba(56,189,248,0.15); top:-60px; right:-60px;
 }
-.card h2{ font-size:24px; margin-bottom:10px; }
-.card p{
-  color:#cbd5e1;
-  line-height:1.7;
-  font-size:15px;
-  margin-bottom:25px;
-}
+.card h2{ font-size:22px; margin-bottom:10px; }
+.card p{ color:#cbd5e1; line-height:1.7; font-size:15px; margin-bottom:25px; }
 .open-btn{
-  display:inline-block;
-  background:linear-gradient(to right,#0ea5e9,#38bdf8);
-  padding:12px 18px;
-  border-radius:12px;
-  color:white;
-  font-size:14px;
-  font-weight:600;
-  text-decoration:none;
-  transition:0.3s;
+  display:inline-block; background:linear-gradient(to right,#0ea5e9,#38bdf8);
+  padding:12px 18px; border-radius:12px; color:white;
+  font-size:14px; font-weight:600; text-decoration:none; transition:0.3s;
 }
 .open-btn:hover{ transform:scale(1.05); }
 
-/* =========================
-MODAL
-========================= */
-.modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
-  padding:20px;
-}
-.modal-box{
-  width:100%;
-  max-width:500px;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:24px;
-  padding:30px;
-  animation:popup 0.3s ease;
-}
-@keyframes popup{
-  from{ transform:scale(0.8); opacity:0; }
-  to{ transform:scale(1); opacity:1; }
-}
-.modal-box h2{ margin-bottom:20px; font-size:28px; }
-.input{
-  width:100%;
-  padding:14px;
-  border:none;
-  outline:none;
-  border-radius:14px;
-  margin-bottom:15px;
-  background:rgba(255,255,255,0.08);
-  color:white;
-  font-size:15px;
-}
-.input::placeholder{ color:#94a3b8; }
-.save-btn{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:14px;
-  background:linear-gradient(to right,#0ea5e9,#38bdf8);
-  color:white;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
-  transition:0.3s;
-}
+/* MODAL */
+.modal{ position:fixed; inset:0; background:rgba(0,0,0,0.75); display:none; align-items:center; justify-content:center; z-index:1000; padding:20px; }
+.modal-box{ width:100%; max-width:500px; background:#0f172a; border:1px solid rgba(255,255,255,0.12); border-radius:24px; padding:30px; animation:popup 0.3s ease; }
+@keyframes popup{ from{ transform:scale(0.8); opacity:0; } to{ transform:scale(1); opacity:1; } }
+.modal-box h2{ margin-bottom:20px; font-size:26px; }
+.modal .input{ padding:14px; padding-left:14px; margin-bottom:14px; }
+.modal-label{ font-size:13px; color:#94a3b8; margin-bottom:6px; display:block; }
+.save-btn{ width:100%; padding:14px; border:none; border-radius:14px; background:linear-gradient(to right,#0ea5e9,#38bdf8); color:white; font-size:15px; font-weight:600; cursor:pointer; transition:0.3s; font-family:'Poppins',sans-serif; }
 .save-btn:hover{ transform:translateY(-2px); }
-.close-btn{
-  margin-top:12px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:14px;
-  background:#1e293b;
-  color:white;
-  cursor:pointer;
-}
-.loader{
-  width:18px;
-  height:18px;
-  border:3px solid rgba(255,255,255,0.3);
-  border-top:3px solid white;
-  border-radius:50%;
-  display:inline-block;
-  animation:spin 1s linear infinite;
-  margin-right:10px;
-  vertical-align:middle;
-}
+.close-btn{ margin-top:12px; width:100%; padding:12px; border:none; border-radius:14px; background:#1e293b; color:white; cursor:pointer; font-family:'Poppins',sans-serif; }
+.loader{ width:18px; height:18px; border:3px solid rgba(255,255,255,0.3); border-top:3px solid white; border-radius:50%; display:inline-block; animation:spin 1s linear infinite; margin-right:8px; vertical-align:middle; }
 
-@media(max-width:768px){
-  .hero h1{ font-size:36px; }
-  .hero p{ font-size:15px; }
-}
+@media(max-width:768px){ .hero h1{ font-size:32px; } }
 </style>
 </head>
 <body>
 
+<!-- Page Loader -->
 <div id="pageLoader">
   <div class="loader-box">
     <div class="main-spinner"></div>
     <h1>Dashboard Hub</h1>
-    <p>Loading Dashboards...</p>
+    <p>Loading...</p>
   </div>
 </div>
 
-<div class="container">
-  <div class="topbar">
-    <button class="admin-btn" onclick="openModal()">
-      <i class="fa-solid fa-plus"></i> Add Dashboard
+<!-- Login Screen -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo"><i class="fa-solid fa-layer-group"></i></div>
+    <h2>Dashboard Hub</h2>
+    <p class="subtitle">My Dream Foods Limited — Sign in to continue</p>
+    <div class="input-group">
+      <i class="fa-solid fa-user icon-left"></i>
+      <input type="text" id="loginUser" class="input" placeholder="User ID" autocomplete="username">
+    </div>
+    <div class="input-group">
+      <i class="fa-solid fa-lock icon-left"></i>
+      <input type="password" id="loginPass" class="input" placeholder="Password" autocomplete="current-password"
+        onkeydown="if(event.key==='Enter') doLogin()">
+      <i class="fa-solid fa-eye toggle-pw" id="togglePw" onclick="togglePassword()"></i>
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">
+      <i class="fa-solid fa-right-to-bracket" style="margin-right:8px;"></i>Sign In
     </button>
+    <div class="error-msg" id="errorMsg"></div>
   </div>
-  <div class="hero">
-    <h1>Dashboard Hub</h1>
-    <p>Smart central dashboard system for workforce tracking, analytics, reports and production management.</p>
-  </div>
-  <div class="dashboard-grid" id="dashboardGrid"></div>
 </div>
 
+<!-- Main App -->
+<div id="mainApp">
+  <div class="container">
+    <div class="topbar">
+      <div class="user-badge">
+        <i class="fa-solid fa-circle-user"></i>
+        <span id="loggedUserLabel">—</span>
+      </div>
+      <div class="topbar-right">
+        <button class="admin-btn" id="addDashBtn" onclick="openModal()">
+          <i class="fa-solid fa-plus"></i> Add Dashboard
+        </button>
+        <button class="logout-btn" onclick="doLogout()">
+          <i class="fa-solid fa-right-from-bracket" style="margin-right:6px;"></i>Logout
+        </button>
+      </div>
+    </div>
+    <div class="hero">
+      <h1>Dashboard Hub</h1>
+      <p>Smart central dashboard system for workforce tracking, analytics, reports and production management.</p>
+    </div>
+    <div class="dashboard-grid" id="dashboardGrid"></div>
+  </div>
+</div>
+
+<!-- Add Dashboard Modal -->
 <div class="modal" id="modal">
   <div class="modal-box">
     <h2>Add Dashboard</h2>
-    <input type="password" id="password" class="input" placeholder="Admin Password">
-    <input type="text" id="title" class="input" placeholder="Dashboard Title">
-    <input type="text" id="description" class="input" placeholder="Short Description">
-    <input type="text" id="link" class="input" placeholder="Dashboard Link">
-    <input type="text" id="emoji" class="input" placeholder="Emoji Icon (optional) e.g. 📊">
-    <button class="save-btn" onclick="saveDashboard()">Save Dashboard</button>
+    <input type="text" id="m_title"       class="input" placeholder="Dashboard Title">
+    <input type="text" id="m_description" class="input" placeholder="Short Description">
+    <input type="text" id="m_link"        class="input" placeholder="Dashboard Link (https://...)">
+    <label class="modal-label">Role Access — use ";" for multiple e.g. <b>admin; team</b></label>
+    <input type="text" id="m_role"        class="input" placeholder="e.g. admin; team  or  admin">
+    <button class="save-btn" id="saveBtn" onclick="saveDashboard()">Save Dashboard</button>
     <button class="close-btn" onclick="closeModal()">Cancel</button>
   </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbxbVNVS2ca2S24d_ML7hn6tgJrZj080SkosryXu2M_Km0KPGKimwOSw1cS0wy2x4Vg9NA/exec";
+// ── CONFIG ──────────────────────────────────────────────────
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxbVNVS2ca2S24d_ML7hn6tgJrZj080SkosryXu2M_Km0KPGKimwOSw1cS0wy2x4Vg9NA/exec";
+const SESSION_KEY = "mdf_hub_session";
 
-// Each entry: [fa-icon, animation-class]
 const ICON_SET = [
-  ["fa-chart-line",       "anim-bounce"],
-  ["fa-boxes-stacked",    "anim-float"],
-  ["fa-file-invoice",     "anim-shake"],
-  ["fa-truck-fast",       "anim-wobble"],
-  ["fa-users",            "anim-pulse"],
-  ["fa-industry",         "anim-spin"],
-  ["fa-cash-register",    "anim-tada"],
-  ["fa-chart-pie",        "anim-heartbeat"],
-  ["fa-clipboard-list",   "anim-swing"],
-  ["fa-gauge-high",       "anim-flip"],
-  ["fa-warehouse",        "anim-float"],
-  ["fa-bag-shopping",     "anim-bounce"],
-  ["fa-chart-bar",        "anim-pulse"],
-  ["fa-receipt",          "anim-shake"],
-  ["fa-sitemap",          "anim-wobble"]
+  ["fa-chart-line","anim-bounce"],["fa-boxes-stacked","anim-float"],
+  ["fa-file-invoice","anim-shake"],["fa-truck-fast","anim-wobble"],
+  ["fa-users","anim-pulse"],["fa-industry","anim-spin"],
+  ["fa-cash-register","anim-tada"],["fa-chart-pie","anim-heartbeat"],
+  ["fa-clipboard-list","anim-swing"],["fa-gauge-high","anim-flip"],
+  ["fa-warehouse","anim-float"],["fa-bag-shopping","anim-bounce"],
+  ["fa-chart-bar","anim-pulse"],["fa-receipt","anim-shake"],
+  ["fa-sitemap","anim-wobble"]
 ];
 
-async function loadDashboards(){
-  try{
-    const response = await fetch(API_URL);
-    const data = await response.json();
-    const grid = document.getElementById("dashboardGrid");
-    grid.innerHTML = "";
+// ── SESSION ──────────────────────────────────────────────────
+function saveSession(user, role){
+  sessionStorage.setItem(SESSION_KEY, JSON.stringify({ user, role }));
+}
+function getSession(){
+  try{ return JSON.parse(sessionStorage.getItem(SESSION_KEY)); } catch(e){ return null; }
+}
+function clearSession(){ sessionStorage.removeItem(SESSION_KEY); }
 
-    data.forEach((dashboard, index) => {
-      const [icon, anim] = ICON_SET[index % ICON_SET.length];
-      grid.innerHTML += `
-        <div class="card">
-          <div class="icon">
-            <i class="fa-solid ${icon} ${anim}"></i>
-          </div>
-          <h2>${dashboard.title}</h2>
-          <p>${dashboard.description}</p>
-          <a class="open-btn" href="${dashboard.link}" target="_blank">
-            <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:6px;font-size:12px;"></i>
-            Open Dashboard
-          </a>
-        </div>
-      `;
-    });
+// ── PASSWORD TOGGLE ──────────────────────────────────────────
+function togglePassword(){
+  const inp = document.getElementById("loginPass");
+  const ico = document.getElementById("togglePw");
+  inp.type = inp.type === "password" ? "text" : "password";
+  ico.classList.toggle("fa-eye"); ico.classList.toggle("fa-eye-slash");
+}
 
-    setTimeout(()=>{
-      document.getElementById("pageLoader").style.opacity = "0";
-      document.getElementById("pageLoader").style.pointerEvents = "none";
-      setTimeout(()=>{ document.getElementById("pageLoader").style.display = "none"; }, 500);
-    }, 800);
+// ── LOGIN ────────────────────────────────────────────────────
+async function doLogin(){
+  const btn  = document.getElementById("loginBtn");
+  const errEl = document.getElementById("errorMsg");
+  const inputUser = document.getElementById("loginUser").value.trim();
+  const inputPass = document.getElementById("loginPass").value.trim();
 
-  }catch(error){
-    console.log(error);
-    document.getElementById("dashboardGrid").innerHTML = "<h2>Failed To Load Dashboards</h2>";
+  errEl.style.display = "none";
+  if(!inputUser || !inputPass){ showError("Please enter User ID and Password."); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = `<span class="btn-loader"></span> Signing in...`;
+
+  try {
+    // Fetch users from GSheet via GAS
+    const res   = await fetch(`${GAS_URL}?action=getUsers`);
+    const users = await res.json();
+
+    // Match user & password (case-insensitive user, exact password)
+    const matched = users.find(u =>
+      u.user.toLowerCase() === inputUser.toLowerCase() &&
+      String(u.password) === String(inputPass)
+    );
+
+    if(matched){
+      saveSession(matched.user, matched.role);
+      showApp(matched.user, matched.role);
+    } else {
+      showError("Invalid User ID or Password.");
+      btn.disabled = false;
+      btn.innerHTML = `<i class="fa-solid fa-right-to-bracket" style="margin-right:8px;"></i>Sign In`;
+    }
+  } catch(err){
+    console.error(err);
+    showError("Connection failed. Please try again.");
+    btn.disabled = false;
+    btn.innerHTML = `<i class="fa-solid fa-right-to-bracket" style="margin-right:8px;"></i>Sign In`;
   }
 }
 
+function showError(msg){
+  const el = document.getElementById("errorMsg");
+  el.textContent = "⚠️ " + msg;
+  el.style.display = "block";
+}
+
+// ── SHOW APP ─────────────────────────────────────────────────
+function showApp(user, role){
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("mainApp").style.display = "block";
+  document.getElementById("loggedUserLabel").textContent = user + " (" + role + ")";
+  // Add Dashboard button — visible only to admin role
+  document.getElementById("addDashBtn").style.display = (role === "admin") ? "inline-block" : "none";
+  loadDashboards(role);
+}
+
+// ── LOGOUT ───────────────────────────────────────────────────
+function doLogout(){
+  clearSession();
+  document.getElementById("mainApp").style.display = "none";
+  document.getElementById("loginUser").value = "";
+  document.getElementById("loginPass").value = "";
+  document.getElementById("errorMsg").style.display = "none";
+  document.getElementById("loginBtn").disabled = false;
+  document.getElementById("loginBtn").innerHTML = `<i class="fa-solid fa-right-to-bracket" style="margin-right:8px;"></i>Sign In`;
+  document.getElementById("loginScreen").style.display = "flex";
+}
+
+// ── LOAD DASHBOARDS ──────────────────────────────────────────
+async function loadDashboards(role){
+  const grid = document.getElementById("dashboardGrid");
+  grid.innerHTML = `<p style="color:#94a3b8;">Loading dashboards...</p>`;
+
+  try {
+    const res  = await fetch(`${GAS_URL}?action=getDashboards`);
+    const data = await res.json();
+
+    // Filter: only show dashboards where role column includes the logged-in user's role
+    const visible = data.filter(d => d.roles.map(r => r.toLowerCase()).includes(role.toLowerCase()));
+
+    if(visible.length === 0){
+      grid.innerHTML = `<p style="color:#94a3b8;">No dashboards available for your role.</p>`;
+      return;
+    }
+
+    grid.innerHTML = "";
+    visible.forEach((d, i) => {
+      const [icon, anim] = ICON_SET[i % ICON_SET.length];
+      grid.innerHTML += `
+        <div class="card">
+          <div class="icon"><i class="fa-solid ${icon} ${anim}"></i></div>
+          <h2>${d.title}</h2>
+          <p>${d.description}</p>
+          <a class="open-btn" href="${d.link}" target="_blank">
+            <i class="fa-solid fa-arrow-up-right-from-square" style="margin-right:6px;font-size:12px;"></i>
+            Open Dashboard
+          </a>
+        </div>`;
+    });
+  } catch(err){
+    console.error(err);
+    grid.innerHTML = `<p style="color:#fca5a5;">Failed to load dashboards. Please refresh.</p>`;
+  }
+}
+
+// ── ADD DASHBOARD MODAL ──────────────────────────────────────
 function openModal(){ document.getElementById("modal").style.display = "flex"; }
 function closeModal(){ document.getElementById("modal").style.display = "none"; }
 
 async function saveDashboard(){
-  const saveBtn = document.querySelector(".save-btn");
-  const password    = document.getElementById("password").value.trim();
-  const title       = document.getElementById("title").value.trim();
-  const description = document.getElementById("description").value.trim();
-  const link        = document.getElementById("link").value.trim();
-  const emoji       = document.getElementById("emoji").value.trim() || "📊";
+  const btn   = document.getElementById("saveBtn");
+  const title = document.getElementById("m_title").value.trim();
+  const desc  = document.getElementById("m_description").value.trim();
+  const link  = document.getElementById("m_link").value.trim();
+  const role  = document.getElementById("m_role").value.trim();
+  const session = getSession();
 
-  if(password === "" || title === "" || link === ""){
-    alert("Please fill required fields");
-    return;
-  }
+  if(!title || !link || !role){ alert("Title, Link and Role are required."); return; }
 
-  saveBtn.disabled = true;
-  saveBtn.innerHTML = `<span class="loader"></span> Saving Dashboard...`;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="loader"></span> Saving...`;
 
-  try{
-    const response = await fetch(API_URL, {
+  try {
+    const res    = await fetch(GAS_URL, {
       method: "POST",
-      body: JSON.stringify({ password, title, description, link, emoji })
+      body: JSON.stringify({
+        action:      "addDashboard",
+        adminUser:   session.user,
+        title, description: desc, link, role
+      })
     });
-    const result = await response.json();
+    const result = await res.json();
 
     if(result.success){
-      saveBtn.innerHTML = "✅ Dashboard Saved";
-      document.getElementById("password").value = "";
-      document.getElementById("title").value = "";
-      document.getElementById("description").value = "";
-      document.getElementById("link").value = "";
-      document.getElementById("emoji").value = "";
-      loadDashboards();
-      setTimeout(()=>{ closeModal(); saveBtn.disabled = false; saveBtn.innerHTML = "Save Dashboard"; }, 1500);
-    }else{
-      saveBtn.disabled = false;
-      saveBtn.innerHTML = "Save Dashboard";
-      alert(result.message);
+      btn.innerHTML = "✅ Dashboard Saved!";
+      ["m_title","m_description","m_link","m_role"].forEach(id => document.getElementById(id).value = "");
+      loadDashboards(session.role);
+      setTimeout(()=>{ closeModal(); btn.disabled = false; btn.innerHTML = "Save Dashboard"; }, 1500);
+    } else {
+      alert(result.message || "Error saving.");
+      btn.disabled = false; btn.innerHTML = "Save Dashboard";
     }
-  }catch(error){
-    console.log(error);
-    saveBtn.disabled = false;
-    saveBtn.innerHTML = "Save Dashboard";
-    alert("Something Went Wrong");
+  } catch(err){
+    console.error(err);
+    alert("Something went wrong.");
+    btn.disabled = false; btn.innerHTML = "Save Dashboard";
   }
 }
 
-loadDashboards();
+// ── INIT ─────────────────────────────────────────────────────
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const loader = document.getElementById("pageLoader");
+    loader.style.opacity = "0"; loader.style.pointerEvents = "none";
+    setTimeout(() => loader.style.display = "none", 500);
+
+    const session = getSession();
+    if(session && session.user){
+      showApp(session.user, session.role);
+    } else {
+      document.getElementById("loginScreen").style.display = "flex";
+    }
+  }, 800);
+});
 </script>
 </body>
 </html>
